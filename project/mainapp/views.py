@@ -34,7 +34,7 @@ class create_expense(CreateView):
     form_class = ExpenseForm
     template_name = "mainapp/expense_create.html"
 
-def delete_expense(expense_id):
+def delete_expense(request, expense_id):
     try:
         expense = Expense.objects.get(id=expense_id)
         expense.delete()
