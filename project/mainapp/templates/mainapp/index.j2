@@ -1,0 +1,64 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'mainapp/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1> {{ sum_amount }}</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" class="form-control btn btn-primary" />
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Expense</th>
+                        <th scope="col">Category</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in obj_list %}
+                        <tr>
+                            <td> {{ i.amount }} </td>
+                            <td> {{ i.category}} </td>
+                            <td><a href="{% url 'delete_exp' i.id %}" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <canvas id="pieChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+        <script>
+            data_exp = [{{sum_gr}}, {{sum_rt}}, {{sum_ot}}, {{sum_tx}}];
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctx = document.getElementById('pieChart').getContext('2d');
+                const data = {
+                    labels: ["Groceries", "Rent", "Other", "Taxes"],
+                    datasets: [{
+                        data: data_exp, 
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 255, 0, 0.6)',
+                            'rgba(0, 128, 0, 0.6)'
+                            // Add more colors here if needed
+                        ],
+                    }],
+                };
+                const pieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,
+                });
+            });
+        </script>
+    </body>
+</html>
