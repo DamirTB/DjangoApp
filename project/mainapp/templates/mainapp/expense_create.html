@@ -1,0 +1,16 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'mainapp/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
+    </head>
+    <body>
+        <div class="container"> 
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="form-control btn btn-primary" />
+            </form>
+        </div>
+    </body>
+</html>

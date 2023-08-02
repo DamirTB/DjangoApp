@@ -12,6 +12,8 @@ class Expense(models.Model):
         ("Other", "Other")
     ]
     category = models.CharField(max_length=10, choices=expense_choices, default="Other")
+    def get_absolute_url(self):
+        return '/'
     def __str__(self):
         return f"{self.amount} spent on {self.category}"
     def sum_amount(category):

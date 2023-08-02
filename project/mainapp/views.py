@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from .models import Expense
-from .forms import ExpenseForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, DeleteView
+from .models import Expense
+from .forms import ExpenseForm
 
 def index(request):
     if request.method=="POST":
@@ -27,6 +28,11 @@ def index(request):
                "sum_ot" : sum_other,
                "sum_tx" : sum_taxes}
     return render(request, "mainapp/index.j2", context)
+
+class create_expense(CreateView):
+    model = Expense
+    form_class = ExpenseForm
+    template_name = "mainapp/expense_create.html"
 
 def delete_expense(expense_id):
     try:
