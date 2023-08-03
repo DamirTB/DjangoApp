@@ -5,10 +5,18 @@
         <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
     </head>
     <body>
-        <div class="container"> 
+        <div class="container">
+            <h1> Register Page </h1> 
             <form action="" method="POST">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <div class="form-control">
+                    {{ form.username }}
+                </div>
+                <div class="form-control">
+                    {{ form.password1 }}
+                </div>
+                
+                {{ form.password2 }}
                 <input type="submit" class="form-control btn btn-primary" />
             </form>
         </div>
