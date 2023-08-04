@@ -1,3 +1,25 @@
+*{
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+}
+
 .form-control{
     margin: 10px;
+}
+
+.login-card{
+    padding: 200px;
+    width: 50%;
+    height: 100vh;/* 
+    background-color: blue */
+  /*   border: solid red 1px;
+*/}
+
+.custom-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }

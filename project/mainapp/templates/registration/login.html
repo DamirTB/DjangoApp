@@ -5,13 +5,15 @@
         <link rel="stylesheet" href="{% static 'mainapp/style.css' %}">
     </head>
     <body>
-        <div class="container"> 
+        <div class="custom-container"> 
             <h1> Login Page </h1>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" class="form-control btn btn-primary" />
-            </form>
+            <div class="login-card">
+                <form action="" method="POST" class="text-center">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" class="form-control btn btn-primary" />
+                </form>
+            </div>
         </div>
     </body>
 </html>

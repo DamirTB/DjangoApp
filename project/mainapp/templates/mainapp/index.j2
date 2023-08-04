@@ -7,15 +7,15 @@
     </head>
     <body>
         <div class="container">
-            {% if user.username %}
-                <h1> Welcome {{user.username}}</h1>
-            {% endif %}
-            <h1> {{ sum_amount }}</h1>
+            <h1> Welcome {{user.username}}</h1>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Log Out</a>
+            <a href="{% url 'create_expense' %}" class="btn btn-primary">Create Expense</a>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Expense</th>
                         <th scope="col">Category</th>
+                        <th scope="col">Date_added</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -24,6 +24,7 @@
                         <tr>
                             <td> {{ i.amount }} </td>
                             <td> {{ i.category}} </td>
+                            <td> {{ i.date_added }} </td>
                             <td><a href="{% url 'delete_exp' i.id %}" class="btn btn-danger">Delete</a></td>
                         </tr>
                     {% endfor %}
@@ -32,7 +33,7 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <canvas id="pieChart" width="200" height="200"></canvas>
+                <canvas id="pieChart"></canvas>
             </div>
         </div>
         <script>

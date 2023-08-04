@@ -3,10 +3,10 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import Expense
-from .forms import ExpenseForm, SignUpForm
+from .forms import ExpenseForm, SignUpForm, LoginForm
 
 @login_required
 def index(request):
@@ -22,10 +22,34 @@ def index(request):
                "sum_tx" : sum_taxes}
     return render(request, "mainapp/index.j2", context)
 
+def login_request(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                return HttpResponse("invalid credentials")
+    else:
+        form = LoginForm()
+    context = {
+        "form" : form   
+    }
+    return render(request, "registration/login.html", context) 
+
 class SignUp(CreateView):
     form_class = SignUpForm
     template_name="registration/register.html"
     success_url = reverse_lazy("index")
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('index')
 
 @login_required
 def logout_request(request):
@@ -44,4 +68,4 @@ def delete_expense(request, expense_id):
         expense.delete()
     except Expense.DoesNotExist:
         raise Http404("Expense does not exist.")
-    return redirect('/')
+    return redirect('index')

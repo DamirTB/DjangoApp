@@ -12,10 +12,12 @@ class Expense(models.Model):
         ("Other", "Other")
     ]
     category = models.CharField(max_length=10, choices=expense_choices, default="Other")
-    def get_absolute_url(self):
-        return '/'
     def __str__(self):
         return f"{self.amount} spent on {self.category}"
+    def get_absolute_url(self):
+        return '/'
     def sum_amount(category):
         list_exp = Expense.objects.filter(category=category)
         return list_exp.aggregate(models.Sum('amount'))['amount__sum']
+    class Meta:
+        ordering = ['-pk']
