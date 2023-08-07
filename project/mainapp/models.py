@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Expense(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateField(auto_now=True)
     amount = models.IntegerField()
     expense_choices = [
@@ -16,8 +18,11 @@ class Expense(models.Model):
         return f"{self.amount} spent on {self.category}"
     def get_absolute_url(self):
         return '/'
-    def sum_amount(category):
-        list_exp = Expense.objects.filter(category=category)
-        return list_exp.aggregate(models.Sum('amount'))['amount__sum']
+    def sum_amount(list_exp, category):
+        sum = 0
+        for i in list_exp:
+            if i.category==category:
+                sum += i.amount
+        return sum
     class Meta:
         ordering = ['-pk']

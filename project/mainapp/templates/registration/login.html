@@ -6,13 +6,17 @@
     </head>
     <body>
         <div class="custom-container"> 
-            <h1> Login Page </h1>
             <div class="login-card">
-                <form action="" method="POST" class="text-center">
+                <div class="text-center">
+                    <h1> Login Page </h1>
+                </div>
+                <form action="" method="POST">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form.username }}
+                    {{ form.password }}
                     <input type="submit" class="form-control btn btn-primary" />
                 </form>
+                <a href="{% url 'signup' %}">Don't have an account?</a>
             </div>
         </div>
     </body>
